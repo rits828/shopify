@@ -3,7 +3,7 @@ name: Deploy Shopify Theme to rits-dev
 on:
   push:
     branches:
-      - main  # Change to any branch you want to auto-deploy
+      - main  # Change to any branch you want to auto-deploy test
 
 jobs:
   deploy:
