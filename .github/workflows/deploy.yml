@@ -1,0 +1,33 @@
+name: Deploy Shopify Theme to rits-dev
+
+on:
+  push:
+    branches:
+      - main  # Change to any branch you want to auto-deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme
+
+      - name: Deploy to Shopify
+        env:
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+        run: |
+          shopify theme push \
+            --store rits-dev.myshopify.com \
+            --theme 162634924335 \
+            --token "$SHOPIFY_CLI_THEME_TOKEN" \
+            --path . \
+            --unpublished
