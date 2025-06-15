@@ -1,0 +1,96 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "cult_support_zone_B6LcNc": {
+      "type": "cult-support-zone",
+      "blocks": {
+        "support_item_T7AGrX": {
+          "type": "support_item",
+          "settings": {
+            "icon": "shopify://shop_images/chat_1.png",
+            "link": "shopify://products/bundle-1",
+            "title": "Ask Our Assistant",
+            "subheading": "24/7 answers for delivery, returns and more"
+          }
+        },
+        "support_item_wbNpML": {
+          "type": "support_item",
+          "settings": {
+            "icon": "shopify://shop_images/location.png",
+            "link": "shopify://products/bundle-2",
+            "title": "Talk to a Cult Expert",
+            "subheading": "Experts to guide your purchase"
+          }
+        },
+        "support_item_eh9enP": {
+          "type": "support_item",
+          "settings": {
+            "icon": "shopify://shop_images/chat_1.png",
+            "link": "shopify://pages/contact",
+            "title": "Find a Cult Store",
+            "subheading": "Explore products in person"
+          }
+        },
+        "support_item_tMiW7B": {
+          "type": "support_item",
+          "settings": {
+            "icon": "shopify://shop_images/history.png",
+            "link": "shopify://pages/contact",
+            "title": "Track Your Order",
+            "subheading": "Get real-time delivery updates anytime"
+          }
+        }
+      },
+      "block_order": [
+        "support_item_T7AGrX",
+        "support_item_wbNpML",
+        "support_item_eh9enP",
+        "support_item_tMiW7B"
+      ],
+      "name": "Support Popup",
+      "settings": {
+        "support_title": "Cult Support Zone"
+      }
+    },
+    "cult_support_zone_xKQN9Y": {
+      "type": "cult-support-zone",
+      "disabled": true,
+      "name": "Support Popup",
+      "settings": {
+        "support_title": "✨ Cult Support Zone"
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "color_scheme": "background-1",
+        "newsletter_enable": true,
+        "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": true,
+        "show_social": true,
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "show_policy": false,
+        "margin_top": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "cult_support_zone_B6LcNc",
+    "cult_support_zone_xKQN9Y",
+    "footer"
+  ]
+}
