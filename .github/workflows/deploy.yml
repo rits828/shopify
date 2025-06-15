@@ -3,7 +3,7 @@ name: Deploy Shopify Theme to rits-dev
 on:
   push:
     branches:
-      - main  # Change to any branch you want to auto-deploy test
+      - main
 
 jobs:
   deploy:
@@ -23,11 +23,10 @@ jobs:
 
       - name: Deploy to Shopify
         env:
-          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          SHOPIFY_CLI_AUTH_TOKEN: ${{ secrets.SHOPIFY_CLI_AUTH_TOKEN }}
         run: |
           shopify theme push \
             --store rits-dev.myshopify.com \
             --theme 162634924335 \
-            --token "$SHOPIFY_CLI_THEME_TOKEN" \
             --path . \
             --unpublished
