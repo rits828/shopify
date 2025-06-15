@@ -1,0 +1,245 @@
+<style>
+  .support-toggle-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #000;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  .support-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .support-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+
+  .support-modal {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 300px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    font-family: sans-serif;
+    overflow: hidden;
+    z-index: 1001;
+  }
+
+  .support-header {
+    background-color: #1a1a1e;
+    color: #fff;
+    padding: 14px;
+    font-weight: 700;
+  }
+
+  .support-header.with-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .support-header-logo {
+    width: 24px;
+    height: 24px;
+  }
+
+  .support-link {
+    display: block;
+    padding: 13px;
+    border-bottom: 1px solid #dddddd;
+    color: #1a1a1e;
+    text-decoration: none;
+  }
+
+  .support-link:last-child {
+    border-bottom: none;
+  }
+
+  .support-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .support-block-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+  }
+
+  .support-text {
+    flex-grow: 1;
+    margin-right: 8px;
+  }
+
+  .support-title {
+    font-weight: 700;
+    line-height: 21px;
+    font-size: 13px;
+  }
+
+  .support-subtitle {
+    font-size: 10px;
+    color: #1a1a1e99;
+  }
+
+  .support-arrow {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+</style>
+
+<div id="popupToggle" class="support-toggle-button">
+  <img src="{{ 'chat-icon.jpg' | asset_url }}" alt="Message" id="messageIcon" class="support-icon">
+  <img src="{{ 'close-icon.jpg' | asset_url }}" alt="Close" id="closeIcon" class="support-icon hide">
+</div>
+
+<div id="popupOverlay" class="support-overlay"></div>
+
+<div id="popupModal" class="support-modal">
+  <div class="support-header with-logo">
+    <img src="{{ 'cult-logo.jpg' | asset_url }}" alt="Support Logo" class="support-header-logo">
+    {% if section.settings.support_title != blank %}
+      <span>{{ section.settings.support_title }}</span>
+    {% endif %}
+  </div>
+
+  <div class="support-links">
+    {% for block in section.blocks %}
+      {% if block.settings.link != blank %}
+        <a href="{{ block.settings.link }}" class="support-link">
+      {% else %}
+        <div class="support-link">
+      {% endif %}
+
+        <div class="support-content">
+          {% if block.settings.icon != blank %}
+            <img src="{{ block.settings.icon | image_url: width: 32 }}" alt="" class="support-block-icon">
+          {% endif %}
+          <div class="support-text">
+            {% if block.settings.title != blank %}
+              <div class="support-title">{{ block.settings.title }}</div>
+            {% endif %}
+            {% if block.settings.subheading != blank %}
+              <div class="support-subtitle">{{ block.settings.subheading }}</div>
+            {% endif %}
+          </div>
+          <img src="{{ 'arrow-icon.png' | asset_url }}" alt="Arrow" class="support-arrow">
+        </div>
+
+      {% if block.settings.link != blank %}
+        </a>
+      {% else %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Support Popup",
+  "settings": [
+    {
+      "type": "text",
+      "id": "support_title",
+      "label": "Support Modal Heading",
+      "default": "Cult Support Zone"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "support_item",
+      "name": "Support Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Support Popup",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleButton = document.getElementById('popupToggle');
+    const popupModal = document.getElementById('popupModal');
+    const popupOverlay = document.getElementById('popupOverlay');
+    const iconMessage = document.getElementById('messageIcon');
+    const iconClose = document.getElementById('closeIcon');
+
+    let isPopupOpen = false;
+
+    const openPopup = () => {
+      popupModal.style.display = 'block';
+      popupOverlay.style.display = 'block';
+      iconMessage.classList.add('hide');
+      iconClose.classList.remove('hide');
+      isPopupOpen = true;
+    };
+
+    const closePopup = () => {
+      popupModal.style.display = 'none';
+      popupOverlay.style.display = 'none';
+      iconMessage.classList.remove('hide');
+      iconClose.classList.add('hide');
+      isPopupOpen = false;
+    };
+
+    toggleButton.addEventListener('click', () => {
+      isPopupOpen ? closePopup() : openPopup();
+    });
+
+    popupOverlay.addEventListener('click', closePopup);
+  });
+</script>
